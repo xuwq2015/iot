@@ -9,5 +9,7 @@ void L298N_Init(void);
 void L298N_Rise(void);
 //下降
 void L298N_Decline(void);
+//停止
+void L298N_stop(void);
 
 #endif

@@ -16,17 +16,31 @@ void L298N_Init(void)
 	/* 初始化IO口PA3 */
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	
+	//将IN1、IN2对应的引脚电平拉低
+	GPIO_ResetBits(GPIOA,GPIO_Pin_2);
+	GPIO_ResetBits(GPIOA,GPIO_Pin_3);
 }
 
 //上升
 void L298N_Rise(void)
 {
-	GPIO_SetBits(GPIOA, GPIO_Pin_2);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_5);  //LED0对应引脚GPIOB.5拉低，亮  等同LED0=0;
-	GPIO_SetBits(GPIOE,GPIO_Pin_5);   //LED1对应引脚GPIOE.5拉高，灭 等同LED1=1;
+	GPIO_ResetBits(GPIOA,GPIO_Pin_2);
+	//将IN2对应的引脚电平拉高
+	GPIO_SetBits(GPIOA,GPIO_Pin_3);
 }
 
 //下降
 void L298N_Decline(void)
 {
+	GPIO_ResetBits(GPIOA,GPIO_Pin_3);
+	GPIO_SetBits(GPIOA,GPIO_Pin_2);
+}
+
+//停止
+void L298N_stop(void)
+{
+	//将IN1、IN2对应的引脚电平拉低
+	GPIO_ResetBits(GPIOA,GPIO_Pin_2);
+	GPIO_ResetBits(GPIOA,GPIO_Pin_3);
 }
