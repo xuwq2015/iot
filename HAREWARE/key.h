@@ -2,6 +2,7 @@
 #define __KEY_H
 
 #include <sys.h>
+#include <iot.h>
 
 #define KEY_S2 PCin(4)   		//PC4
 #define KEY_S3 PCin(13)   	//PC13

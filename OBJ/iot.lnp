@@ -29,6 +29,7 @@
 "..\obj\stm32f10x_wwdg.o"
 "..\obj\key.o"
 "..\obj\l298n.o"
+"..\obj\lcd1602.o"
 "..\obj\delay.o"
 "..\obj\sys.o"
 "..\obj\usart.o"
