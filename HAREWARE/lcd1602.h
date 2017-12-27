@@ -11,6 +11,18 @@
 #include <stm32f10x.h>
 #include <iot.h>
 
+
+/*
+ * 此项目所用LCD是不带背光版本，
+ * 所以LCD状态只有两种：
+ * LCD_Display:显示文字
+ * LCD_No_Display：没有显示文字
+ **/
+typedef enum
+{ LCD_Display = 0x00,
+  LCD_No_Display			
+}LCD_Stat;
+
 #define Set_RS()    GPIO_SetBits(LCD_RS_GPIO, LCD_RS_PIN);  	// 数据  
 #define Reset_RS()  GPIO_ResetBits(LCD_RS_GPIO, LCD_RS_PIN); 	// 命令状态   
 #define Set_RW()    GPIO_SetBits(LCD_RW_GPIO, LCD_RW_PIN); 		// 读 
@@ -26,5 +38,6 @@ void Write_Cmd(uint8_t Cmd);
 static void Write_Data(uint8_t Data);  
 void Write_String(uint8_t cmd,uint8_t* p);   
 void Delay(uint32_t t); 
+void LCD_ChangeMode(void);
 
 #endif

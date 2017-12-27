@@ -2,7 +2,7 @@
 ..\obj\lcd1602.o: ..\HAREWARE\lcd1602.h
 ..\obj\lcd1602.o: ..\USER\stm32f10x.h
 ..\obj\lcd1602.o: ..\CORE\core_cm3.h
-..\obj\lcd1602.o: D:\MDK\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\lcd1602.o: D:\mdk5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\lcd1602.o: ..\USER\system_stm32f10x.h
 ..\obj\lcd1602.o: ..\USER\stm32f10x_conf.h
 ..\obj\lcd1602.o: ..\STM32F10x_FWLib\inc\stm32f10x_adc.h

@@ -4,6 +4,16 @@
 #include <stm32f10x.h>
 
 /*
+ * 此系统拥有两种模式，正常模式(normal)及
+ * 设置模式(set)。
+ * 在不同模式下每个按键定义的功能不同。
+ **/
+typedef enum {
+	SYSTEM_Mode_Normal = 0x00,
+	SYSTEM_Mode_Set
+}SYSTEM_Mode;
+
+/*
  * RH:湿度
  * C:温度
  * RG:光照强度

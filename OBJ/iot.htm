@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\OBJ\iot.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\OBJ\iot.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Wed Dec 27 01:15:55 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Wed Dec 27 22:49:48 2017
 <BR><P>
 <H3>Maximum Stack Usage =        100 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -461,13 +461,13 @@ Global Symbols
 <P><STRONG><a name="[a]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[35]"></a>EXTI15_10_IRQHandler</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, key.o(i.EXTI15_10_IRQHandler))
+<P><STRONG><a name="[35]"></a>EXTI15_10_IRQHandler</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, key.o(i.EXTI15_10_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = EXTI15_10_IRQHandler &rArr; L298N_stop
 </UL>
 <BR>[Calls]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearITPendingBit
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_stop
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_Decline
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearITPendingBit
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_stop
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_Decline
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
@@ -475,13 +475,13 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = EXTI4_IRQHandler &rArr; L298N_stop
 </UL>
 <BR>[Calls]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearITPendingBit
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_stop
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearITPendingBit
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_stop
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_Rise
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[66]"></a>EXTI_ClearITPendingBit</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f10x_exti.o(i.EXTI_ClearITPendingBit))
+<P><STRONG><a name="[64]"></a>EXTI_ClearITPendingBit</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f10x_exti.o(i.EXTI_ClearITPendingBit))
 <BR><BR>[Called By]<UL><LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI4_IRQHandler
 <LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI15_10_IRQHandler
 </UL>
@@ -512,9 +512,9 @@ Global Symbols
 
 <P><STRONG><a name="[60]"></a>GPIO_ResetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_gpio.o(i.GPIO_ResetBits))
 <BR><BR>[Called By]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_Init
-<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_stop
+<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_stop
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_Rise
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_Decline
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_Decline
 <LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Cmd
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Data
 <LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Busy_Wait
@@ -522,7 +522,7 @@ Global Symbols
 
 <P><STRONG><a name="[61]"></a>GPIO_SetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_gpio.o(i.GPIO_SetBits))
 <BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_Rise
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_Decline
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;L298N_Decline
 <LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Cmd
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Data
 <LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Busy_Wait
@@ -536,7 +536,7 @@ Global Symbols
 <P><STRONG><a name="[5]"></a>HardFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_it.o(i.HardFault_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[6a]"></a>KEY_Init</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, key.o(i.KEY_Init))
+<P><STRONG><a name="[6a]"></a>KEY_Init</STRONG> (Thumb, 106 bytes, Stack size 8 bytes, key.o(i.KEY_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = KEY_Init &rArr; set_exti &rArr; NVIC_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
@@ -546,7 +546,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[64]"></a>L298N_Decline</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, l298n.o(i.L298N_Decline))
+<P><STRONG><a name="[65]"></a>L298N_Decline</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, l298n.o(i.L298N_Decline))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = L298N_Decline
 </UL>
 <BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
@@ -574,7 +574,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI4_IRQHandler
 </UL>
 
-<P><STRONG><a name="[65]"></a>L298N_stop</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, l298n.o(i.L298N_stop))
+<P><STRONG><a name="[66]"></a>L298N_stop</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, l298n.o(i.L298N_stop))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = L298N_stop
 </UL>
 <BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
@@ -583,7 +583,7 @@ Global Symbols
 <LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI15_10_IRQHandler
 </UL>
 
-<P><STRONG><a name="[6d]"></a>LCD1602_Init</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, lcd1602.o(i.LCD1602_Init))
+<P><STRONG><a name="[6d]"></a>LCD1602_Init</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, lcd1602.o(i.LCD1602_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = LCD1602_Init &rArr; Write_Cmd &rArr; Busy_Wait &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Cmd
@@ -766,7 +766,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetSysClock
 </UL>
 
-<P><STRONG><a name="[6b]"></a>set_exti</STRONG> (Thumb, 110 bytes, Stack size 16 bytes, key.o(i.set_exti))
+<P><STRONG><a name="[6b]"></a>set_exti</STRONG> (Thumb, 178 bytes, Stack size 16 bytes, key.o(i.set_exti))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = set_exti &rArr; NVIC_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init

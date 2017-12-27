@@ -1,21 +1,11 @@
 #include <lcd1602.h>
 
+//LCD状态标记
+static LCD_Stat LCD_Status;
+
 //uint8_t Buffer1[]={"FGasdkkk"};  
 //uint8_t Buffer2[]={"CDABabcdefghijkl"}; 
 
-//GPIO_InitTypeDef GPIO_InitStructure; 
-
-/*
-//uint8_t Read_Data(void);    
-int main(void) {     
-	RCC_Config();    
-	GPIO_Config();    
-	LCD1602_Init();     
-	Write_String(0x80,Buffer1);    
-	Write_String(0xc0,Buffer2);    
-	while(1);
-}
-*/
 
 //初始化LCD所需IO
 static void GPIO_Config(void) {
@@ -135,7 +125,20 @@ void LCD1602_Init(void) {
 	Write_Cmd(0x06);    
 	
 	//清屏
-	Write_Cmd(0x01); 
+	Write_Cmd(0x01);
+	LCD_Status = LCD_Display;
+}
+
+/*
+ * 改变LCD当前模式
+ **/
+void LCD_ChangeMode(void)
+{
+	if (LCD_Status == LCD_Display) {
+		LCD_Status = LCD_No_Display;
+	} else {
+		LCD_Status = LCD_Display;
+	}
 }
 
 /*  
