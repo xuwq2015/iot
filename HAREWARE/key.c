@@ -126,6 +126,7 @@ void EXTI15_10_IRQHandler (void)
 		delay_ms(1300);
 		if (KEY_S1 == KEY_PRESS) {//长按
 		} else if (KEY_S1 == KEY_RELEASE) {//短按
+			LCD1602_ChangeMode();
 		}
 		EXTI_ClearITPendingBit(EXTI_Line10);
 		return;

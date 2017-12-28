@@ -4,11 +4,10 @@
 static LCD_Stat LCD_Status;
 
 //uint8_t Buffer1[]={"FGasdkkk"};  
-//uint8_t Buffer2[]={"CDABabcdefghijkl"}; 
 
 
 //初始化LCD所需IO
-static void GPIO_Config(void) {
+static void LCD1602_GpioConfig(void) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
 	RCC_APB2PeriphClockCmd(LCD_RCC_APB2Periph_GPIO, ENABLE);
@@ -32,7 +31,12 @@ static void GPIO_Config(void) {
 	GPIO_Init(LCD_E_GPIO, &GPIO_InitStructure);
 }
 
-static void Busy_Wait(void) {  
+/*
+ * 读忙函数
+ * 此函数内使用while循环不停读取LCD_DB7_PIN引脚上的电平信号
+ * 直到LCD_DB7_PIN引脚电平编为0(低电平)为止
+ **/
+static void LCD1602_BusyWait(void) {  
 	GPIO_InitTypeDef GPIO_InitStructure; 
 	
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_All;   
@@ -57,8 +61,8 @@ static void Busy_Wait(void) {
 }  
 
 //发送指令
-void Write_Cmd(uint8_t Cmd) {     
-	Busy_Wait();    
+void LCD1602_WriteCmd(uint8_t Cmd) {     
+	LCD1602_BusyWait();    
 	Reset_RS();    
 	Reset_RW();    
 	Reset_E();     
@@ -79,8 +83,8 @@ void Write_Cmd(uint8_t Cmd) {
 	Reset_E();  
 }   
 
-static void Write_Data(uint8_t Data) {     
-	Busy_Wait();    
+static void LCD1602_WriteData(uint8_t Data) {     
+	LCD1602_BusyWait();    
 	Set_RS();    
 	Reset_RW();    
 	Reset_E();
@@ -101,42 +105,51 @@ static void Write_Data(uint8_t Data) {
 	Reset_E(); 
 }    
 
-//写显示数据
-void Write_String(uint8_t cmd, uint8_t* p) {   
-	//uint8_t i=0;
-	Write_Cmd(cmd);  
+/*
+ * 写显示数据函数
+ * 每次写入之前会先清屏
+ **/
+void LCD1602_WriteString(uint8_t* p) {   
+	//清屏
+	LCD_CLEAR_SCREEN;
+	
+	LCD1602_WriteCmd(0x80);  
 	while(*p!='\0'){
-		Write_Data(*p++);
+		LCD1602_WriteData(*p++);
 		//Buffer[i++]=Read_Data();
 	}  
 }   
 
 //LCD初始化函数
 void LCD1602_Init(void) { 
-	GPIO_Config();
+	LCD1602_GpioConfig();
 	
-	//功能设置命令:4位总线,单行显示,5x10的点阵字符
-	Write_Cmd(0x34); 
+	//功能设置命令:8位总线、单行显示、5x10的点阵字符
+	LCD1602_WriteCmd(0x24);
 	
 	//显示开关控制:开显示,无光标,不闪烁
-	Write_Cmd(0x0c);    
+	LCD_OPEN_DISPLAY;   
 	
 	//光标和显示模式设置:光标右移，文字移动
-	Write_Cmd(0x06);    
+	LCD1602_WriteCmd(0x06);    
 	
 	//清屏
-	Write_Cmd(0x01);
+	LCD_CLEAR_SCREEN;
 	LCD_Status = LCD_Display;
 }
 
 /*
  * 改变LCD当前模式
  **/
-void LCD_ChangeMode(void)
+void LCD1602_ChangeMode(void)
 {
 	if (LCD_Status == LCD_Display) {
+		//显示开关控制:关显示,无光标,不闪烁
+		LCD_CLOSE_DISPLAY;
 		LCD_Status = LCD_No_Display;
 	} else {
+		//显示开关控制:开显示,无光标,不闪烁
+		LCD_OPEN_DISPLAY;
 		LCD_Status = LCD_Display;
 	}
 }

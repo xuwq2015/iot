@@ -19,7 +19,7 @@ int main(void)
  
 	uart_init(115200);	 	//串口初始化为115200
 	LCD1602_Init(); 			//初始化LCD1602
-	Write_String(0x80, "The system is initializing...");
+	LCD1602_WriteString("The system is initializing...");
  
 	L298N_Init();					//初始化L298N电机驱动模块
 	KEY_Init();						//初始化按键及按键中断

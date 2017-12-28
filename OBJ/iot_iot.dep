@@ -1,5 +1,5 @@
 Dependencies for Project 'iot', Target 'iot': (DO NOT MODIFY !)
-F (.\main.c)(0x5A438957)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\CORE -I ..\STM32F10x_FWLib\inc -I ..\HAREWARE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart-I.\RTE\_iot-ID:\mdk5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\mdk5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
+F (.\main.c)(0x5A4503BA)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\CORE -I ..\STM32F10x_FWLib\inc -I ..\HAREWARE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart-I.\RTE\_iot-ID:\mdk5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\mdk5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
 I (..\USER\stm32f10x.h)(0x5A3FC023)
 I (..\CORE\core_cm3.h)(0x5A3FC023)
 I (D:\mdk5\ARM\ARMCC\include\stdint.h)(0x588B8344)
@@ -32,7 +32,7 @@ I (..\HAREWARE\key.h)(0x5A43A96B)
 I (..\SYSTEM\sys\sys.h)(0x5A410824)
 I (..\USER\iot.h)(0x5A43B0D8)
 I (..\HAREWARE\l298n.h)(0x5A3FCC10)
-I (..\HAREWARE\lcd1602.h)(0x5A43B301)
+I (..\HAREWARE\lcd1602.h)(0x5A4503AE)
 I (..\SYSTEM\delay\delay.h)(0x5A4107F3)
 I (..\SYSTEM\usart\usart.h)(0x5A410852)
 I (D:\mdk5\ARM\ARMCC\include\stdio.h)(0x588B8344)
@@ -767,7 +767,7 @@ I (..\STM32F10x_FWLib\inc\stm32f10x_spi.h)(0x5A3FC023)
 I (..\STM32F10x_FWLib\inc\stm32f10x_tim.h)(0x5A3FC023)
 I (..\STM32F10x_FWLib\inc\stm32f10x_usart.h)(0x5A3FC023)
 I (..\STM32F10x_FWLib\inc\misc.h)(0x5A3FC023)
-F (..\HAREWARE\key.c)(0x5A43B0E0)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\CORE -I ..\STM32F10x_FWLib\inc -I ..\HAREWARE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart-I.\RTE\_iot-ID:\mdk5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\mdk5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\key.o --omf_browse ..\obj\key.crf --depend ..\obj\key.d)
+F (..\HAREWARE\key.c)(0x5A44F7E3)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\CORE -I ..\STM32F10x_FWLib\inc -I ..\HAREWARE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart-I.\RTE\_iot-ID:\mdk5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\mdk5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\key.o --omf_browse ..\obj\key.crf --depend ..\obj\key.d)
 I (..\HAREWARE\key.h)(0x5A43A96B)
 I (..\SYSTEM\sys\sys.h)(0x5A410824)
 I (..\USER\stm32f10x.h)(0x5A3FC023)
@@ -801,7 +801,7 @@ I (..\STM32F10x_FWLib\inc\misc.h)(0x5A3FC023)
 I (..\USER\iot.h)(0x5A43B0D8)
 I (..\SYSTEM\delay\delay.h)(0x5A4107F3)
 I (..\HAREWARE\l298n.h)(0x5A3FCC10)
-I (..\HAREWARE\lcd1602.h)(0x5A43B301)
+I (..\HAREWARE\lcd1602.h)(0x5A4503AE)
 F (..\HAREWARE\l298n.c)(0x5A4107CB)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\CORE -I ..\STM32F10x_FWLib\inc -I ..\HAREWARE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart-I.\RTE\_iot-ID:\mdk5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\mdk5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\l298n.o --omf_browse ..\obj\l298n.crf --depend ..\obj\l298n.d)
 I (..\HAREWARE\l298n.h)(0x5A3FCC10)
 I (..\USER\stm32f10x.h)(0x5A3FC023)
@@ -832,8 +832,8 @@ I (..\STM32F10x_FWLib\inc\stm32f10x_tim.h)(0x5A3FC023)
 I (..\STM32F10x_FWLib\inc\stm32f10x_usart.h)(0x5A3FC023)
 I (..\STM32F10x_FWLib\inc\stm32f10x_wwdg.h)(0x5A3FC023)
 I (..\STM32F10x_FWLib\inc\misc.h)(0x5A3FC023)
-F (..\HAREWARE\lcd1602.c)(0x5A43B303)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\CORE -I ..\STM32F10x_FWLib\inc -I ..\HAREWARE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart-I.\RTE\_iot-ID:\mdk5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\mdk5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\lcd1602.o --omf_browse ..\obj\lcd1602.crf --depend ..\obj\lcd1602.d)
-I (..\HAREWARE\lcd1602.h)(0x5A43B301)
+F (..\HAREWARE\lcd1602.c)(0x5A4503B1)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\CORE -I ..\STM32F10x_FWLib\inc -I ..\HAREWARE -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart-I.\RTE\_iot-ID:\mdk5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\mdk5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\lcd1602.o --omf_browse ..\obj\lcd1602.crf --depend ..\obj\lcd1602.d)
+I (..\HAREWARE\lcd1602.h)(0x5A4503AE)
 I (..\USER\stm32f10x.h)(0x5A3FC023)
 I (..\CORE\core_cm3.h)(0x5A3FC023)
 I (D:\mdk5\ARM\ARMCC\include\stdint.h)(0x588B8344)
