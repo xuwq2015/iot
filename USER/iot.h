@@ -59,4 +59,13 @@ typedef enum {
 
 #define LCD_RCC_APB2Periph_GPIO (RCC_APB2Periph_GPIOD | RCC_APB2Periph_GPIOE | RCC_APB2Periph_AFIO)
 
+
+
+/*
+ * DS18B20相关定义
+ **/
+#define DS18B20_GPIO GPIOA
+#define DS18B20_Pin 0
+#define DS18B20_RCC_APB2Periph_GPIO RCC_APB2Periph_GPIOA
+
 #endif
