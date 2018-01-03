@@ -7,6 +7,7 @@
 #include <lcd1602.h>
 #include <delay.h>
 #include <ds18b20.h>
+#include <adc.h>
 
  
 /************************************************
@@ -16,6 +17,8 @@
 int main(void)
 {	
 	short temperature;
+	uint16_t illumination;
+	uint16_t humidity;
 	uint8_t LCD_Buf[36] = "\0";
 	
 	delay_init();	    	 //延时函数初始化
@@ -29,15 +32,18 @@ int main(void)
 	L298N_Init();					//初始化L298N电机驱动模块
 	KEY_Init();						//初始化按键及按键中断
 	DS18B20_Init();				//初始化DS18B20
+	Adc_Init();						//初始化光敏、湿度模块
  
 	while(1) {
 		memset(LCD_Buf, 0, 36);
-		temperature = DS18B20_Get_Temp();
+		temperature = DS18B20_Get_Temp();				//获取温度
+		illumination = Get_Illumination();			//获取光照强度值
+		humidity = Get_Humidity();							//获取湿度值
 		if (temperature < 0) {
 			temperature = -temperature;
-			sprintf((char *)LCD_Buf, "temperature:-%d", temperature);
+			sprintf((char *)LCD_Buf, "t:-%d i:%d h:%d", temperature, illumination, humidity);
 		} else {
-			sprintf((char *)LCD_Buf, "temperature:%c", temperature);
+			sprintf((char *)LCD_Buf, "t:%d i:%d h:%d", temperature, illumination, humidity);
 		}
 		LCD1602_WriteString(LCD_Buf);
 		delay_ms(60000);

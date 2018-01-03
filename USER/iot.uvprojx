@@ -555,6 +555,11 @@
               <FileType>1</FileType>
               <FilePath>..\HAREWARE\ds18b20.c</FilePath>
             </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HAREWARE\adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
