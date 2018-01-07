@@ -15,7 +15,7 @@
 u8 DS18B20_Init(void);
 void DS18B20_Rst(void);
 u8 DS18B20_Check(void);
-int8_t DS18B20_Get_Temp(void);
+int16_t DS18B20_Get_Temp(void);
 void DS18B20_Start(void);
 void DS18B20_Write_Byte(u8 dat);
 u8 DS18B20_Read_Byte(void);

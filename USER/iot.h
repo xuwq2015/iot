@@ -20,7 +20,6 @@ typedef struct {
 	int8_t humidity;
 } environment_st;
 */
-
 /*
  * RH:湿度
  * C:温度

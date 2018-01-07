@@ -1,6 +1,8 @@
 #ifndef __SET_H
 #define __SET_H
 
+#include <iot.h>
+
 //设置选项
 typedef enum {
 	SET_OPTION_T = 0x01,		//温度
@@ -19,5 +21,7 @@ static void SET_ToHumidity(void);
 
 void SET_AddValue(void);
 void SET_ReduceValue(void);
+
+void SET_GetValue(void);
 
 #endif

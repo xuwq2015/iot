@@ -1,16 +1,35 @@
 #include <set.h>
-#include <iot.h>
 #include <stdio.h>
 #include <string.h>
 #include <lcd1602.h>
+#include <stmflash.h>
 
-static short SET_temperature = 0;		//温度值
-static int8_t SET_illumination = 0;	//光照值
-static int8_t SET_humidity = 0;			//湿度值
+/*
+ * 存放设置过的值。
+ * SET_temperature：设置的温度的值
+ * SET_illumination：设置的光照的值
+ * SET_humidity：设置的湿度的值
+ * SET_curtainStat：窗帘的开合程度（单位：百分比；0：全开；100：全关）
+ **/
+int16_t SET_temperature = 0;
+int16_t SET_illumination = 0;
+int16_t SET_humidity = 0;
+int16_t SET_curtainStat = 0;
 
-//保存系统当前模式（设置模式或正常模式）
+/*
+ * system_mode：保存系统当前模式（设置模式或正常模式）
+ * SET_CurrentOption：
+ * 如果系统处于设置模式时，此变量用来保存当前
+ * 正处于那种设置选项。
+ * 设置选项包括：
+ * 1、设置温度
+ * 2、设置光照
+ * 3、设置湿度
+ **/
 SYSTEM_Mode system_mode = SYSTEM_Mode_Normal;
 static int8_t SET_CurrentOption = SET_OPTION_N;
+
+#define FLASH_SAVE_ADDR  0x0807FFF7
 
 /*
  * 调用此函数可以退出或进入设置模式
@@ -28,6 +47,12 @@ void SET_EnterOrQuit(void)
 		SET_CurrentOption = SET_OPTION_N;
 		
 		/*保存设置的值*/
+		int16_t TEXT_Buffer[4];
+		TEXT_Buffer[0] = SET_temperature;
+		TEXT_Buffer[1] = SET_illumination;
+		TEXT_Buffer[2] = SET_humidity;
+		TEXT_Buffer[3] = SET_curtainStat;
+		STMFLASH_Write(FLASH_SAVE_ADDR, (u16 *)TEXT_Buffer, 2);
 	}
 }
 
@@ -59,7 +84,12 @@ static void SET_ToTemperature(void)
 	
 	SET_CurrentOption = SET_OPTION_T;
 	
-	sprintf((char *)LCD_Buf, "Set temperature:-%d", SET_temperature);
+	if (SET_temperature < 0) {
+		sprintf((char *)LCD_Buf, "Set temperature:-%d", SET_temperature * -1);
+	} else {
+		sprintf((char *)LCD_Buf, "Set temperature:%d", SET_temperature);
+	}
+		
 	LCD1602_WriteString(LCD_Buf);
 }
 
@@ -133,4 +163,15 @@ void SET_ReduceValue(void)
 		case SET_OPTION_N:
 			break;
 	}
+}
+
+void SET_GetValue(void)
+{
+	int16_t TEXT_Buffer[4];
+	STMFLASH_Read(FLASH_SAVE_ADDR, (u16 *)TEXT_Buffer, 4);
+	
+	SET_temperature = TEXT_Buffer[0];
+	SET_illumination = TEXT_Buffer[1];
+	SET_humidity = TEXT_Buffer[2];
+	SET_curtainStat = TEXT_Buffer[3];
 }

@@ -8,17 +8,22 @@
 #include <delay.h>
 #include <ds18b20.h>
 #include <adc.h>
+#include <set.h>
 
  
 /************************************************
 基于stm32f103zet6芯片
 ************************************************/
 
+extern int16_t SET_temperature;
+extern int16_t SET_illumination;
+extern int16_t SET_humidity;
+
 int main(void)
 {	
-	short temperature;
-	uint16_t illumination;
-	uint16_t humidity;
+	int16_t temperature;
+	int16_t illumination;
+	int16_t humidity;
 	uint8_t LCD_Buf[36] = "\0";
 	
 	delay_init();	    	 //延时函数初始化
@@ -33,6 +38,8 @@ int main(void)
 	KEY_Init();						//初始化按键及按键中断
 	DS18B20_Init();				//初始化DS18B20
 	Adc_Init();						//初始化光敏、湿度模块
+	
+	SET_GetValue();				//从flash中读取设置的值
  
 	while(1) {
 		memset(LCD_Buf, 0, 36);
