@@ -120,11 +120,11 @@ void DS18B20_Start(void)
  * 精度：0.1C
  * 返回值：温度值 （-550~1250） 
  **/
-short DS18B20_Get_Temp(void)
+int8_t DS18B20_Get_Temp(void)
 {
 	u8 temp;
 	u8 TL,TH;
-	short tem;
+	u8 tem;
 	DS18B20_Start ();  				// ds1820 start convert
 	DS18B20_Rst();
 	DS18B20_Check();	 

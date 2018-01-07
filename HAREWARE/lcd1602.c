@@ -61,7 +61,7 @@ static void LCD1602_BusyWait(void) {
 }  
 
 //发送指令
-void LCD1602_WriteCmd(uint8_t Cmd) {     
+static void LCD1602_WriteCmd(uint8_t Cmd) {     
 	LCD1602_BusyWait();    
 	Reset_RS();    
 	Reset_RW();    

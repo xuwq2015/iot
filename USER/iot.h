@@ -14,6 +14,14 @@ typedef enum {
 }SYSTEM_Mode;
 
 /*
+typedef struct {
+	int8_t temperature;
+	int8_t illumination;
+	int8_t humidity;
+} environment_st;
+*/
+
+/*
  * RH:湿度
  * C:温度
  * RG:光照强度

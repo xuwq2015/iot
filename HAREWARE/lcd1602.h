@@ -38,10 +38,9 @@ typedef enum
 void LCD1602_Init(void);
 static void LCD1602_GpioConfig(void); 
 static void LCD1602_BusyWait(void);  
-void LCD1602_WriteCmd(uint8_t Cmd); 
+static void LCD1602_WriteCmd(uint8_t Cmd); 
 static void LCD1602_WriteData(uint8_t Data);  
 void LCD1602_WriteString(uint8_t* p);   
-void LCD1602_Delay(uint32_t t); 
 void LCD1602_ChangeMode(void);
 
 #endif
