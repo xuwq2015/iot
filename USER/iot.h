@@ -4,6 +4,13 @@
 #include <stm32f10x.h>
 
 /*
+ * DEBUG_FLAG==1:打开串口调试
+ * DEBUG_FLAG==0：关闭串口调试
+ * 串口1暂时无法接收数据
+ **/
+#define DEBUG_FLAG 1
+
+/*
  * 此系统拥有两种模式，正常模式(normal)及
  * 设置模式(set)。
  * 在不同模式下每个按键定义的功能不同。

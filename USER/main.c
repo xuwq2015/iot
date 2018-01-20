@@ -10,6 +10,10 @@
 #include <adc.h>
 #include <set.h>
 
+#if DEBUG_FLAG
+	#include <usart.h>
+#endif
+
  
 /************************************************
 基于stm32f103zet6芯片
@@ -31,14 +35,39 @@ int main(void)
 	//设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); 
 	
+#if DEBUG_FLAG
+	uart_init(115200);	//初始化串口1
+	printf("Serial port initialization is completed");
+#endif
+	
+#if DEBUG_FLAG
+	printf("initializing LCD");
+#endif
 	LCD1602_Init(); 			//初始化LCD1602
 	LCD1602_WriteString("The system is initializing...");
+#if DEBUG_FLAG
+	printf("LCD initialization is completed");
+#endif
 
 	L298N_Init();					//初始化L298N电机驱动模块
+#if DEBUG_FLAG
+	printf("L298N initialization is completed");
+#endif
+
 	KEY_Init();						//初始化按键及按键中断
+#if DEBUG_FLAG
+	printf("button initialization is completed");
+#endif
+
 	DS18B20_Init();				//初始化DS18B20
 	Adc_Init();						//初始化光敏、湿度模块
-	
+#if DEBUG_FLAG
+	printf("sensor initialization is completed");
+#endif
+
+#if DEBUG_FLAG
+	printf("Reading setup information");
+#endif
 	SET_GetValue();				//从flash中读取设置的值
  
 	while(1) {
