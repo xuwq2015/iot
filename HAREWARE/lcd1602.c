@@ -1,4 +1,5 @@
 #include <lcd1602.h>
+#include <delay.h>
 
 //LCD状态标记
 static LCD_Stat LCD_Status;
@@ -48,9 +49,9 @@ static void LCD1602_BusyWait(void) {
 	Reset_RS();
 	Set_RW();  
 	Reset_E();
-	//Delay(5);
+	delay_ms(5);
 	Set_E();
-	//Delay(25);
+	delay_ms(25);
 	while(GPIO_ReadInputDataBit(LCD_DB_GPIO, LCD_DB7_PIN) == 1);
 	Reset_E();
 
@@ -61,7 +62,7 @@ static void LCD1602_BusyWait(void) {
 }  
 
 //发送指令
-void LCD1602_WriteCmd(uint8_t Cmd) {     
+static void LCD1602_WriteCmd(uint8_t Cmd) {     
 	LCD1602_BusyWait();    
 	Reset_RS();    
 	Reset_RW();    

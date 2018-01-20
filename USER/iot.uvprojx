@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\HAREWARE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart</IncludePath>
+              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\HAREWARE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\SYSTEM\set</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -550,6 +550,21 @@
               <FileType>1</FileType>
               <FilePath>..\HAREWARE\lcd1602.c</FilePath>
             </File>
+            <File>
+              <FileName>ds18b20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HAREWARE\ds18b20.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HAREWARE\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stmflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HAREWARE\stmflash.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -569,6 +584,11 @@
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\usart\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\set\set.c</FilePath>
             </File>
           </Files>
         </Group>

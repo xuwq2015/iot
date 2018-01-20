@@ -1,9 +1,12 @@
 #include <key.h>
+#include <set.h>
 #include <delay.h>
 #include <l298n.h>
 #include <lcd1602.h>
 #include <stm32f10x.h>
 #include <stm32f10x_exti.h>
+
+extern SYSTEM_Mode system_mode;
 
 void KEY_Init(void)
 {
@@ -101,9 +104,9 @@ void EXTI4_IRQHandler(void)
 
 	//判断S2按键当前状态
 	if (KEY_S2 == KEY_PRESS)
-		L298N_Rise();
+		KEY_S2_Press();
 	else if (KEY_S2 == KEY_RELEASE)
-		L298N_stop();
+		KEY_S2_Release();
 	
 	EXTI_ClearITPendingBit(EXTI_Line4); //清除LINE4上的中断标志位
 }
@@ -125,8 +128,9 @@ void EXTI15_10_IRQHandler (void)
 	if (KEY_S1 == KEY_PRESS) {
 		delay_ms(1300);
 		if (KEY_S1 == KEY_PRESS) {//长按
+			SET_EnterOrQuit();
 		} else if (KEY_S1 == KEY_RELEASE) {//短按
-			LCD1602_ChangeMode();
+			KEY_S1_Press();
 		}
 		EXTI_ClearITPendingBit(EXTI_Line10);
 		return;
@@ -140,4 +144,71 @@ void EXTI15_10_IRQHandler (void)
 	}
 	
 	EXTI_ClearITPendingBit(EXTI_Line13); //清除LINE13上的中断标志位
+}
+
+/*
+ * S1短按
+ * 根据当前的系统模式调用相关函数。
+ * 正常模式：调用LCD1602_ChangeMode()改变LCD的模式。
+ * 设置模式：调用SET_SwitchOption()改变设置选项
+ **/
+void KEY_S1_Press(void)
+{
+	if (system_mode == SYSTEM_Mode_Normal) {
+		LCD1602_ChangeMode();
+	} else if (system_mode == SYSTEM_Mode_Set) {
+		SET_SwitchOption();
+	}
+}
+
+/*
+ * S2按下
+ * 根据当前系统模式调用相应的函数。
+ * 正常模式：调用L298N_Rise()驱动电机旋转。
+ * 设置模式：调用SET_AddValue()增加相应的设置值
+ **/
+void KEY_S2_Press(void)
+{
+	if (system_mode == SYSTEM_Mode_Normal) {
+		L298N_Rise();
+	} else if (system_mode == SYSTEM_Mode_Set) {
+		SET_AddValue();
+	}
+}
+
+/*
+ * S2松开
+ * 设置模式下不支持长按
+ **/
+void KEY_S2_Release(void)
+{
+	if (system_mode == SYSTEM_Mode_Normal) {
+		L298N_stop();
+	}
+}
+
+/*
+ * S3按下
+ * 根据当前系统模式调用相应的函数。
+ * 正常模式：调用L298N_Decline()驱动电机旋转。
+ * 设置模式：调用SET_ReduceValue()减少相应的设置值
+ **/
+void KEY_S3_Press(void)
+{
+	if (system_mode == SYSTEM_Mode_Normal) {
+		L298N_Decline();
+	} else if (system_mode == SYSTEM_Mode_Set) {
+		SET_ReduceValue();
+	}
+}
+
+/*
+ * S3松开
+ * 设置模式下不支持长按
+ **/
+void KEY_S3_Release(void)
+{
+	if (system_mode == SYSTEM_Mode_Normal) {
+		L298N_stop();
+	}
 }

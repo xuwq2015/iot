@@ -4,6 +4,13 @@
 #include <stm32f10x.h>
 
 /*
+ * 串口调试开关
+ * IOT_DEBUG==1时打开串口调试
+ * IOT_DEBUG==0时关闭串口调试
+ **/
+#define IOT_DEBUG 1
+
+/*
  * 此系统拥有两种模式，正常模式(normal)及
  * 设置模式(set)。
  * 在不同模式下每个按键定义的功能不同。
@@ -13,6 +20,13 @@ typedef enum {
 	SYSTEM_Mode_Set
 }SYSTEM_Mode;
 
+/*
+typedef struct {
+	int8_t temperature;
+	int8_t illumination;
+	int8_t humidity;
+} environment_st;
+*/
 /*
  * RH:湿度
  * C:温度
@@ -58,5 +72,14 @@ typedef enum {
 }LCD_DB_PIN;
 
 #define LCD_RCC_APB2Periph_GPIO (RCC_APB2Periph_GPIOD | RCC_APB2Periph_GPIOE | RCC_APB2Periph_AFIO)
+
+
+
+/*
+ * DS18B20相关定义
+ **/
+#define DS18B20_GPIO GPIOA
+#define DS18B20_Pin 0
+#define DS18B20_RCC_APB2Periph_GPIO RCC_APB2Periph_GPIOA
 
 #endif
