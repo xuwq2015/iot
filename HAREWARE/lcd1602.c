@@ -38,72 +38,37 @@ static void LCD1602_GpioConfig(void) {
  * 直到LCD_DB7_PIN引脚电平编为0(低电平)为止
  **/
 static void LCD1602_BusyWait(void) {  
-	GPIO_InitTypeDef GPIO_InitStructure; 
+	u8 sta;
 	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_All;   
-	//浮空输入：http://blog.sina.com.cn/s/blog_bf63e2650102wihq.html
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(LCD_DB_GPIO, &GPIO_InitStructure);
-	
+	DATAOUT(0xff);
 	Reset_RS();
-	Set_RW();  
-	Reset_E();
-	delay_ms(5);
-	Set_E();
-	delay_ms(25);
-	while(GPIO_ReadInputDataBit(LCD_DB_GPIO, LCD_DB7_PIN) == 1);
-	Reset_E();
-
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_All;  
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(LCD_DB_GPIO, &GPIO_InitStructure);
+	Set_RW();
+	do
+	{
+		Set_E();
+		delay_ms(5);	//延时5ms，非常重要
+ 		sta = GPIO_ReadInputDataBit(LCD_DB_GPIO, LCD_DB7_PIN);//读取状态字
+		Reset_E();
+	}while(sta & 0x80);//bit7等于1表示液晶正忙，重复检测直到其等于0为止
 }  
 
 //发送指令
-static void LCD1602_WriteCmd(uint8_t Cmd) {     
+static void LCD1602_WriteCmd(uint8_t cmd) {     
 	LCD1602_BusyWait();    
 	Reset_RS();    
-	Reset_RW();    
-	Reset_E();     
-	// Delay(5);    
-	Set_E();   
-	GPIO_Write(LCD_DB_GPIO, Cmd);    
-	/*     
-	GPIO_WriteBit(GPIOE,GPIO_Pin_10,(BitAction)((Cmd&0x80)>>7));//D7    
-	GPIO_WriteBit(GPIOE,GPIO_Pin_9,(BitAction)((Cmd&0x40)>>6)); //D6    
-	GPIO_WriteBit(GPIOE,GPIO_Pin_8,(BitAction)((Cmd&0x20)>>5)); //D5    
-	GPIO_WriteBit(GPIOE,GPIO_Pin_7,(BitAction)((Cmd&0x10)>>4)); //D4    
-	GPIO_WriteBit(GPIOD,GPIO_Pin_1,(BitAction)((Cmd&0x08)>>3)); //D3    
-	GPIO_WriteBit(GPIOD,GPIO_Pin_0,(BitAction)((Cmd&0x04)>>2)); //D2    
-	GPIO_WriteBit(GPIOD,GPIO_Pin_15,(BitAction)((Cmd&0x02)>>1)); //D1    
-	GPIO_WriteBit(GPIOD,GPIO_Pin_14,(BitAction)((Cmd&0x01))); //D0   
-	*/     
-	//Delay(25);    
+	Reset_RW();      
+	DATAOUT(cmd);    
+	Set_E();     
 	Reset_E();  
 }   
 
 static void LCD1602_WriteData(uint8_t Data) {     
 	LCD1602_BusyWait();    
 	Set_RS();    
-	Reset_RW();    
-	Reset_E();
-	//  Delay(5);    
+	Reset_RW();        
+	DATAOUT(Data); 
 	Set_E();     
-	GPIO_Write(LCD_DB_GPIO, (0xff00&(Data)));       
-	/*     
-	GPIO_WriteBit(GPIOE,GPIO_Pin_10,(BitAction)((Data&0x80)>>7));//D7    
-	GPIO_WriteBit(GPIOE,GPIO_Pin_9,(BitAction)((Data&0x40)>>6)); //D6    
-	GPIO_WriteBit(GPIOE,GPIO_Pin_8,(BitAction)((Data&0x20)>>5)); //D5    
-	GPIO_WriteBit(GPIOE,GPIO_Pin_7,(BitAction)((Data&0x10)>>4)); //D4    
-	GPIO_WriteBit(GPIOD,GPIO_Pin_1,(BitAction)((Data&0x08)>>3)); //D3    
-	GPIO_WriteBit(GPIOD,GPIO_Pin_0,(BitAction)((Data&0x04)>>2)); //D2    
-	GPIO_WriteBit(GPIOD,GPIO_Pin_15,(BitAction)((Data&0x02)>>1)); //D1   
-	GPIO_WriteBit(GPIOD,GPIO_Pin_14,(BitAction)((Data&0x01))); //D0    
-	*/    
-	// Delay(25);   
-	Reset_E(); 
+	Reset_E();
 }    
 
 /*
@@ -115,9 +80,8 @@ void LCD1602_WriteString(uint8_t* p) {
 	LCD_CLEAR_SCREEN;
 	
 	LCD1602_WriteCmd(0x80);  
-	while(*p!='\0'){
+	while(*p != '\0'){
 		LCD1602_WriteData(*p++);
-		//Buffer[i++]=Read_Data();
 	}  
 }   
 

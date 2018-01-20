@@ -10,10 +10,6 @@
 #include <adc.h>
 #include <set.h>
 
-#if (IOT_DEBUG)
-	#include <usart.h>
-#endif
-
  
 /************************************************
 基于stm32f103zet6芯片
@@ -34,10 +30,6 @@ int main(void)
  
 	//设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); 
-	
-#if (IOT_DEBUG)
-	uart_init(115200);
-#endif
 	
 	LCD1602_Init(); 			//初始化LCD1602
 	LCD1602_WriteString("The system is initializing...");

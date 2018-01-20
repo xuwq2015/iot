@@ -30,6 +30,9 @@ typedef enum
 #define Set_E()     GPIO_SetBits(LCD_E_GPIO, LCD_E_PIN); 			// 使能 
 #define Reset_E()   GPIO_ResetBits(LCD_E_GPIO, LCD_E_PIN);		// 失能 
 
+//1602液晶数据端口	PD0~7
+#define	DATAOUT(x)	GPIO_Write(LCD_DB_GPIO, x)
+
 #define LCD_CLEAR_SCREEN  LCD1602_WriteCmd(0x01);							//清屏指令
 #define LCD_OPEN_DISPLAY  LCD1602_WriteCmd(0x0C);							//打开显示
 #define LCD_CLOSE_DISPLAY LCD1602_WriteCmd(0x08);							//关闭显示
@@ -38,7 +41,7 @@ typedef enum
 void LCD1602_Init(void);
 static void LCD1602_GpioConfig(void); 
 static void LCD1602_BusyWait(void);  
-static void LCD1602_WriteCmd(uint8_t Cmd); 
+static void LCD1602_WriteCmd(uint8_t cmd); 
 static void LCD1602_WriteData(uint8_t Data);  
 void LCD1602_WriteString(uint8_t* p);   
 void LCD1602_ChangeMode(void);

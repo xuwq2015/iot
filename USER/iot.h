@@ -4,13 +4,6 @@
 #include <stm32f10x.h>
 
 /*
- * 串口调试开关
- * IOT_DEBUG==1时打开串口调试
- * IOT_DEBUG==0时关闭串口调试
- **/
-#define IOT_DEBUG 1
-
-/*
  * 此系统拥有两种模式，正常模式(normal)及
  * 设置模式(set)。
  * 在不同模式下每个按键定义的功能不同。
