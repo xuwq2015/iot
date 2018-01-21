@@ -1,5 +1,10 @@
 #include <ds18b20.h>
 #include <delay.h>
+#include <iot.h>
+
+#if DEBUG_FLAG
+	#include <stdio.h>
+#endif
 
 /* 复位DS18B20 */
 void DS18B20_Rst(void)	   
@@ -168,6 +173,11 @@ u8 DS18B20_Init(void)
 	GPIO_SetBits(DS18B20_GPIO,DS18B20_Pin);    //输出1
 	
 	DS18B20_Rst();
+	
+#if DEBUG_FLAG
+	printf("DS18B20 initialization is completed");
+	printf("The current temperature value:%d", DS18B20_Get_Temp());
+#endif
 
 	return DS18B20_Check();
 }

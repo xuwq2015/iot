@@ -11,6 +11,14 @@ typedef enum {
 	SET_OPTION_N						//无、未知
 } SET_OPTION;
 
+typedef struct {
+	int16_t temperature;
+	int16_t illumination;
+	int16_t humidity;
+} SET_Value;
+
+extern SYSTEM_Mode system_mode;
+
 void SET_EnterOrQuit(void);
 
 void SET_SwitchOption(void);
@@ -23,5 +31,7 @@ void SET_AddValue(void);
 void SET_ReduceValue(void);
 
 void SET_GetValue(void);
+
+void SET_GetSetValue(SET_Value *SetValue_p);
 
 #endif

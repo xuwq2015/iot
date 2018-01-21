@@ -3,18 +3,15 @@
 #include <string.h>
 #include <lcd1602.h>
 #include <stmflash.h>
+#include <iot.h>
 
 /*
- * 存放设置过的值。
- * SET_temperature：设置的温度的值
- * SET_illumination：设置的光照的值
- * SET_humidity：设置的湿度的值
+ * set_value存放设置过的值。
  * SET_curtainStat：窗帘的开合程度（单位：百分比；0：全开；100：全关）
  **/
-int16_t SET_temperature = 0;
-int16_t SET_illumination = 0;
-int16_t SET_humidity = 0;
-int16_t SET_curtainStat = 0;
+
+static SET_Value set_value;
+static int16_t SET_curtainStat;
 
 /*
  * system_mode：保存系统当前模式（设置模式或正常模式）
@@ -39,20 +36,28 @@ void SET_EnterOrQuit(void)
 	if (system_mode == SYSTEM_Mode_Normal) {//进入
 		system_mode = SYSTEM_Mode_Set;
 		SET_CurrentOption = SET_OPTION_T;
+#if DEBUG_FLAG
+		printf("Enter setup mode");
+#endif
 		
 		/*此处获取之前设置的温度、光照、湿度值*/
 		SET_ToTemperature();
 	} else if (system_mode == SYSTEM_Mode_Set) {//退出
 		system_mode = SYSTEM_Mode_Normal;
 		SET_CurrentOption = SET_OPTION_N;
-		
+	
 		/*保存设置的值*/
 		int16_t TEXT_Buffer[4];
-		TEXT_Buffer[0] = SET_temperature;
-		TEXT_Buffer[1] = SET_illumination;
-		TEXT_Buffer[2] = SET_humidity;
+		TEXT_Buffer[0] = set_value.temperature;
+		TEXT_Buffer[1] = set_value.illumination;
+		TEXT_Buffer[2] = set_value.humidity;
 		TEXT_Buffer[3] = SET_curtainStat;
 		STMFLASH_Write(FLASH_SAVE_ADDR, (u16 *)TEXT_Buffer, 2);
+
+#if DEBUG_FLAG
+		printf("Settings saved successfully");
+		printf("Enter normal mode");
+#endif
 	}
 }
 
@@ -61,15 +66,31 @@ void SET_EnterOrQuit(void)
  **/
 void SET_SwitchOption(void)
 {
+#if DEBUG_FLAG
+	if (system_mode == SYSTEM_Mode_Normal)
+		printf("System mode is normal mode");
+	else if (system_mode == SYSTEM_Mode_Set)
+		printf("System mode is set mode");
+#endif
+	
 	switch(SET_CurrentOption) {
 		case SET_OPTION_T:
 			SET_ToIllumination();
+#if DEBUG_FLAG
+			printf("Enter the humidity setting");
+#endif
 			break;
 		case SET_OPTION_I:
 			SET_ToHumidity();
+#if DEBUG_FLAG
+			printf("Enter the light settings");
+#endif
 			break;
 		case SET_OPTION_H:
 			SET_ToTemperature();
+#if DEBUG_FLAG
+			printf("Enter the temperature setting");
+#endif
 		case SET_OPTION_N:
 			break;
 	}
@@ -84,10 +105,10 @@ static void SET_ToTemperature(void)
 	
 	SET_CurrentOption = SET_OPTION_T;
 	
-	if (SET_temperature < 0) {
-		sprintf((char *)LCD_Buf, "Set temperature:-%d", SET_temperature * -1);
+	if (set_value.temperature < 0) {
+		sprintf((char *)LCD_Buf, "Set temperature:-%d", set_value.temperature * -1);
 	} else {
-		sprintf((char *)LCD_Buf, "Set temperature:%d", SET_temperature);
+		sprintf((char *)LCD_Buf, "Set temperature:%d", set_value.temperature);
 	}
 		
 	LCD1602_WriteString(LCD_Buf);
@@ -102,7 +123,7 @@ static void SET_ToIllumination(void)
 	
 	SET_CurrentOption = SET_OPTION_I;
 	
-	sprintf((char *)LCD_Buf, "Set illumination:-%d", SET_illumination);
+	sprintf((char *)LCD_Buf, "Set illumination:-%d", set_value.illumination);
 	LCD1602_WriteString(LCD_Buf);
 }
 
@@ -115,7 +136,7 @@ static void SET_ToHumidity(void)
 	
 	SET_CurrentOption = SET_OPTION_H;
 	
-	sprintf((char *)LCD_Buf, "Set humidity:-%d", SET_humidity);
+	sprintf((char *)LCD_Buf, "Set humidity:-%d", set_value.humidity);
 	LCD1602_WriteString(LCD_Buf);
 }
 
@@ -126,15 +147,15 @@ void SET_AddValue(void)
 {
 	switch(SET_CurrentOption) {
 		case SET_OPTION_T:
-			SET_temperature++;
+			set_value.temperature++;
 			SET_ToTemperature();
 			break;
 		case SET_OPTION_I:
-			SET_illumination++;
+			set_value.illumination++;
 			SET_ToIllumination();
 			break;
 		case SET_OPTION_H:
-			SET_humidity++;
+			set_value.humidity++;
 			SET_ToHumidity();
 			break;
 		case SET_OPTION_N:
@@ -149,15 +170,15 @@ void SET_ReduceValue(void)
 {
 		switch(SET_CurrentOption) {
 		case SET_OPTION_T:
-			SET_temperature--;
+			set_value.temperature--;
 			SET_ToTemperature();
 			break;
 		case SET_OPTION_I:
-			SET_illumination--;
+			set_value.illumination--;
 			SET_ToIllumination();
 			break;
 		case SET_OPTION_H:
-			SET_humidity--;
+			set_value.humidity--;
 			SET_ToHumidity();
 			break;
 		case SET_OPTION_N:
@@ -170,8 +191,26 @@ void SET_GetValue(void)
 	int16_t TEXT_Buffer[4];
 	STMFLASH_Read(FLASH_SAVE_ADDR, (u16 *)TEXT_Buffer, 4);
 	
-	SET_temperature = TEXT_Buffer[0];
-	SET_illumination = TEXT_Buffer[1];
-	SET_humidity = TEXT_Buffer[2];
+	set_value.temperature = TEXT_Buffer[0];
+	set_value.illumination = TEXT_Buffer[1];
+	set_value.humidity = TEXT_Buffer[2];
 	SET_curtainStat = TEXT_Buffer[3];
+	
+#if DEBUG_FLAG
+	printf("Reading setup information:");
+	printf("temperature:%d", set_value.temperature);
+	printf("illumination:%d", set_value.illumination);
+	printf("humidity:%d", set_value.humidity);
+#endif
+}
+
+/* 
+ * 获取以前设置的值。
+ * 包括温度值、湿度值和光照值
+ **/
+void SET_GetSetValue(SET_Value *SetValue_p)
+{
+	SetValue_p->temperature = set_value.temperature;
+	SetValue_p->illumination = set_value.illumination;
+	SetValue_p->humidity = set_value.humidity;
 }

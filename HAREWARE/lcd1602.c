@@ -1,5 +1,11 @@
 #include <lcd1602.h>
 #include <delay.h>
+#include <iot.h>
+
+#if DEBUG_FLAG
+	#include <stdio.h>
+	#include <set.h>
+#endif
 
 //LCD状态标记
 static LCD_Stat LCD_Status;
@@ -108,31 +114,26 @@ void LCD1602_Init(void) {
  **/
 void LCD1602_ChangeMode(void)
 {
+#if DEBUG_FLAG
+	if (system_mode == SYSTEM_Mode_Normal)
+		printf("System mode is normal mode");
+	else if (system_mode == SYSTEM_Mode_Set)
+		printf("System mode is set mode");
+#endif
+	
 	if (LCD_Status == LCD_Display) {
+#if DEBUG_FLAG
+		printf("Close lcd");
+#endif
 		//显示开关控制:关显示,无光标,不闪烁
 		LCD_CLOSE_DISPLAY;
 		LCD_Status = LCD_No_Display;
 	} else {
+#if DEBUG_FLAG
+		printf("Open lcd");
+#endif
 		//显示开关控制:开显示,无光标,不闪烁
 		LCD_OPEN_DISPLAY;
 		LCD_Status = LCD_Display;
 	}
 }
-
-/*  
-uint8_t Read_Data(void) {    
-	uint8_t Value;    
-	Busy_Wait();    
-	Reset_WR();    
-	Reset_E();    
-	Delay(5);    
-	Set_E();     
-	Value=GPIO_ReadOutputDataBit(GPIOE,GPIO_Pin_10)||GPIO_ReadOutputDataBit(GPIOE,GPIO_Pin_9)
-	||GPIO_ReadOutputDataBit(GPIOE,GPIO_Pin_8)||GPIO_ReadOutputDataBit(GPIOE,GPIO_Pin_7)
-	||GPIO_ReadOutputDataBit(GPIOD,GPIO_Pin_1)||GPIO_ReadOutputDataBit(GPIOD,GPIO_Pin_0)
-	||GPIO_ReadOutputDataBit(GPIOD,GPIO_Pin_15)||GPIO_ReadOutputDataBit(GPIOD,GPIO_Pin_14); 
-	Delay(25);    
-	Reset_E();    
-	return Value; 
-}  
-*/

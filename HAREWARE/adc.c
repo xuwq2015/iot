@@ -1,5 +1,10 @@
 #include <adc.h>
 #include <delay.h>
+#include <iot.h>
+
+#if DEBUG_FLAG
+	#include <stdio.h>
+#endif
 
 void Adc_Init(void)
 {
@@ -40,6 +45,12 @@ void Adc_Init(void)
 	while(ADC_GetResetCalibrationStatus(ADC1));		//等待复位校准结束
 	ADC_StartCalibration(ADC1);		//开启AD校准
 	while(ADC_GetCalibrationStatus(ADC1));				//等待校准结束
+	
+#if DEBUG_FLAG
+	printf("adc initialization is completed");
+	printf("The current illumination value:%d", Get_Illumination());
+	printf("The current humidity value:%d", Get_Humidity());
+#endif
 }
 
 /*

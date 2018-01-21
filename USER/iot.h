@@ -10,6 +10,7 @@
  **/
 #define DEBUG_FLAG 1
 
+
 /*
  * 此系统拥有两种模式，正常模式(normal)及
  * 设置模式(set)。
@@ -20,18 +21,6 @@ typedef enum {
 	SYSTEM_Mode_Set
 }SYSTEM_Mode;
 
-/*
-typedef struct {
-	int8_t temperature;
-	int8_t illumination;
-	int8_t humidity;
-} environment_st;
-*/
-/*
- * RH:湿度
- * C:温度
- * RG:光照强度
- **/
 
 /*
  * 与按键引脚相关的宏定义
@@ -44,7 +33,6 @@ typedef struct {
 
 #define KEY_S3_GPIO GPIOC
 #define KEY_S3_PIN GPIO_Pin_13
-
 
 
 /*
@@ -72,8 +60,6 @@ typedef enum {
 }LCD_DB_PIN;
 
 #define LCD_RCC_APB2Periph_GPIO (RCC_APB2Periph_GPIOD | RCC_APB2Periph_GPIOE | RCC_APB2Periph_AFIO)
-
-
 
 /*
  * DS18B20相关定义

@@ -5,8 +5,11 @@
 #include <lcd1602.h>
 #include <stm32f10x.h>
 #include <stm32f10x_exti.h>
+#include <iot.h>
 
-extern SYSTEM_Mode system_mode;
+#if DEBUG_FLAG
+	#include <stdio.h>
+#endif
 
 void KEY_Init(void)
 {
@@ -126,7 +129,7 @@ void EXTI15_10_IRQHandler (void)
 	
 	//判断是否为S1按键按下
 	if (KEY_S1 == KEY_PRESS) {
-		delay_ms(1300);
+		delay_ms(2000);
 		if (KEY_S1 == KEY_PRESS) {//长按
 			SET_EnterOrQuit();
 		} else if (KEY_S1 == KEY_RELEASE) {//短按
@@ -154,6 +157,9 @@ void EXTI15_10_IRQHandler (void)
  **/
 void KEY_S1_Press(void)
 {
+#if DEBUG_FLAG
+	printf("s1 Press briefly");
+#endif
 	if (system_mode == SYSTEM_Mode_Normal) {
 		LCD1602_ChangeMode();
 	} else if (system_mode == SYSTEM_Mode_Set) {
@@ -169,6 +175,14 @@ void KEY_S1_Press(void)
  **/
 void KEY_S2_Press(void)
 {
+#if DEBUG_FLAG
+	printf("s2 Press");
+	if (system_mode == SYSTEM_Mode_Normal)
+		printf("System mode is normal mode");
+	else if (system_mode == SYSTEM_Mode_Set)
+		printf("System mode is set mode");
+#endif
+	
 	if (system_mode == SYSTEM_Mode_Normal) {
 		L298N_Rise();
 	} else if (system_mode == SYSTEM_Mode_Set) {
@@ -182,6 +196,13 @@ void KEY_S2_Press(void)
  **/
 void KEY_S2_Release(void)
 {
+#if DEBUG_FLAG
+	printf("s2 Release");
+	if (system_mode == SYSTEM_Mode_Normal)
+		printf("System mode is normal mode");
+	else if (system_mode == SYSTEM_Mode_Set)
+		printf("System mode is set mode");
+#endif
 	if (system_mode == SYSTEM_Mode_Normal) {
 		L298N_stop();
 	}
@@ -195,6 +216,13 @@ void KEY_S2_Release(void)
  **/
 void KEY_S3_Press(void)
 {
+#if DEBUG_FLAG
+	printf("s3 Press");
+	if (system_mode == SYSTEM_Mode_Normal)
+		printf("System mode is normal mode");
+	else if (system_mode == SYSTEM_Mode_Set)
+		printf("System mode is set mode");
+#endif
 	if (system_mode == SYSTEM_Mode_Normal) {
 		L298N_Decline();
 	} else if (system_mode == SYSTEM_Mode_Set) {
@@ -208,6 +236,13 @@ void KEY_S3_Press(void)
  **/
 void KEY_S3_Release(void)
 {
+#if DEBUG_FLAG
+	printf("s3 Release");
+	if (system_mode == SYSTEM_Mode_Normal)
+		printf("System mode is normal mode");
+	else if (system_mode == SYSTEM_Mode_Set)
+		printf("System mode is set mode");
+#endif
 	if (system_mode == SYSTEM_Mode_Normal) {
 		L298N_stop();
 	}

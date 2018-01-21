@@ -19,10 +19,6 @@
 基于stm32f103zet6芯片
 ************************************************/
 
-extern int16_t SET_temperature;
-extern int16_t SET_illumination;
-extern int16_t SET_humidity;
-
 int main(void)
 {	
 	int16_t temperature;
